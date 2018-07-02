@@ -26,9 +26,11 @@ import com.briup.apps.poll.bean.User;
  */
 public class SurveyVM {
 	private Long id;
+	private Double average;
 	private String status;
 	private String code;
 	private String surveydate;
+	
 	
 	private Course course;
 	private ClazzVM clazzVM;
@@ -83,5 +85,11 @@ public class SurveyVM {
 	}
 	public void setQnVM(QuestionnaireVM qnVM) {
 		this.qnVM = qnVM;
+	}
+	public Double getAverage() {
+		return average;
+	}
+	public void setAverage(Double average) {
+		this.average = average;
 	}
 }

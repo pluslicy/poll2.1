@@ -4,6 +4,12 @@
   <select id="selectAll" resultMap="SurveyVMResultMap">
   	select * from poll_survey
   </select>
+  <select id="selectByStatus"
+  	 parameterType="java.lang.String" 
+  	 resultMap="SurveyVMResultMap">
+  	select * from poll_survey where status = #{status}
+  </select>
+  
   <select 
   	id="selectById" 
   	parameterType="long" 
@@ -21,6 +27,7 @@
   <resultMap type="com.briup.apps.poll.bean.extend.SurveyVM" 
   	id="SurveyVMResultMap">
   	<id column="id" property="id"/>
+  	<result column="average" property="average"/>
   	<result column="code" property="code"/>
   	<result column="surveyDate" property="surveydate"/>
   	<result column="status" property="status"/>

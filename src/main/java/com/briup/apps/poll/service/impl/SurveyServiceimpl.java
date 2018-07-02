@@ -41,15 +41,21 @@ public class SurveyServiceimpl implements ISurveyService {
 	
 	@Override
 	public void saveOrUpdate(Survey survey) throws Exception {
-		//在保存课调之前先初始化课调信息
-		survey.setStatus(Survey.STATUS_INIT);
-		survey.setCode("");
-		Date surveyDate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String str = sdf.format(surveyDate);		
-		survey.setSurveydate(str);
-		
-		surveyMapper.insert(survey);
+		//1. 判断是保存还是更新
+		if(survey.getId()!=null){
+			//1.1 更新
+			surveyMapper.updateByPrimaryKey(survey);
+		} else {
+			//1.2 保存
+			//在保存课调之前先初始化课调信息
+			survey.setStatus(Survey.STATUS_INIT);
+			survey.setCode("");
+			Date surveyDate = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String str = sdf.format(surveyDate);		
+			survey.setSurveydate(str);		
+			surveyMapper.insert(survey);
+		}
 	}
 
 	@Override
@@ -60,6 +66,16 @@ public class SurveyServiceimpl implements ISurveyService {
 	@Override
 	public SurveyVM findById(long id) throws Exception {
 		return surveyVMMapper.selectById(id);
+	}
+
+	@Override
+	public Survey findSurveyById(long id) throws Exception {
+		return surveyMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<SurveyVM> findByStatus(String status) throws Exception {
+		return surveyVMMapper.selectByStatus(status);
 	}
 
 }
